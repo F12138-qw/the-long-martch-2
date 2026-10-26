@@ -1,1 +1,75 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第一章 · 瑞金出发</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+ 
+  <!-- ============ 顶部栏（与首页一致，资源实时显示） ============ -->
+  <header class="topbar">
+    <div class="site-title">铁血征程 · <span class="gold">重走长征路</span></div>
+    <div class="res-bar">
+      <span class="res-item">兵员 <span class="num res-soldiers">-</span> 人</span>
+      <span class="res-item">粮食 <span class="num res-food">-</span></span>
+      <span class="res-item">弹药 <span class="num res-ammo">-</span></span>
+      <button class="btn-back" onclick="goHome()" type="button">返回地图</button>
+    </div>
+  </header>
+ 
+  <main class="chapter-main">
+    <div class="chapter-card">
+      <div class="chapter-head">
+        <div class="ch-title" id="chTitle"></div>
+        <div class="ch-date" id="chDate"></div>
+      </div>
+      <!-- 剧情文本：打字机逐字显示 -->
+      <div class="story-box" id="storyBox"></div>
+      <!-- 选项区 -->
+      <div class="options" id="options"></div>
+      <!-- 选择反馈 -->
+      <div class="feedback" id="feedback"></div>
+      <!-- 下一步操作 -->
+      <div class="next-area" id="nextArea"></div>
+    </div>
+  </main>
+ 
+  <footer class="footer">《中国近现代史纲要》课程实践作品 · 纪念红军长征胜利90周年</footer>
+ 
+  <script src="../js/game.js"></script>
+  <script>
+    initGame({
+      chapter: 1,
+      title: '瑞金出发',
+      date: '1934年10月',
+      story: '1934年10月，第五次反“围剿”失利后，中央红军主力8.6万余人被迫离开中央苏区，踏上战略转移的漫漫长路。部队物资紧缺、伤员众多，前路茫茫。身为红军队伍中的一名年轻指挥员，你面临第一个抉择——',
+      options: [
+        {
+          text: '跟随大部队，向西实施战略转移',
+          correct: true,
+          cost: { soldiers: 0 },
+          afterText: '1934年10月，中央红军主力及后方机关共8.6万多人，从江西瑞金等地出发，开始长征。你跟随部队，踏上了这条改变中国命运的道路。'
+        },
+        {
+          text: '留在根据地，坚持游击战争',
+          correct: false,
+          cost: { food: -5, ammo: -5 },
+          popupTitle: '史实科普 · 为什么主力不能全留',
+          popupText: '留在苏区坚持游击斗争确有其事——中央决定成立苏区中央分局和中华苏维埃共和国中央政府办事处，领导南方根据地留守红军的斗争。但若红军主力全部留下，将直接面对国民党几十万大军的重兵围剿，有全军覆没的危险。党中央决定主力实施战略转移，保存红军有生力量，只留少量部队开展游击斗争。'
+        },
+        {
+          text: '集中兵力，与敌硬拼死守',
+          correct: false,
+          cost: { soldiers: -10000, food: -10 },
+          popupTitle: '史实科普 · 为什么不能死守硬拼',
+          popupText: '此时国民党军在兵力、装备上均占绝对优势。此前第五次反“围剿”坚持“堡垒对堡垒”的阵地战硬拼，已使红军遭受重大损失、被迫放弃根据地。若继续死守，红军主力将面临毁灭性打击。中央正是吸取这一教训，才决定实行战略转移。'
+        }
+      ],
+      next: 2
+    });
+  </script>
+</body>
+</html>
+ 
