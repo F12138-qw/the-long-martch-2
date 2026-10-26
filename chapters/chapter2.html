@@ -1,1 +1,70 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第二章 · 湘江战役</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+ 
+  <header class="topbar">
+    <div class="site-title">铁血征程 · <span class="gold">重走长征路</span></div>
+    <div class="res-bar">
+      <span class="res-item">兵员 <span class="num res-soldiers">-</span> 人</span>
+      <span class="res-item">粮食 <span class="num res-food">-</span></span>
+      <span class="res-item">弹药 <span class="num res-ammo">-</span></span>
+      <button class="btn-back" onclick="goHome()" type="button">返回地图</button>
+    </div>
+  </header>
+ 
+  <main class="chapter-main">
+    <div class="chapter-card">
+      <div class="chapter-head">
+        <div class="ch-title" id="chTitle"></div>
+        <div class="ch-date" id="chDate"></div>
+      </div>
+      <div class="story-box" id="storyBox"></div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="next-area" id="nextArea"></div>
+    </div>
+  </main>
+ 
+  <footer class="footer">《中国近现代史纲要》课程实践作品 · 纪念红军长征胜利90周年</footer>
+ 
+  <script src="../js/game.js"></script>
+  <script>
+    initGame({
+      chapter: 2,
+      title: '湘江战役',
+      date: '1934年11月底—12月初',
+      story: '突破三道封锁线后，中央红军进抵湘江。蒋介石调集数十万大军，企图将红军围歼于湘江以东。湘江两岸炮火连天，部队伤亡急剧增加。掩护中央纵队渡江的重任，落在了你部肩上——',
+      options: [
+        {
+          text: '拼死阻击敌军，掩护中央纵队渡江',
+          correct: true,
+          cost: { soldiers: -10000 },
+          afterText: '红军将士以巨大的牺牲，掩护中央机关和主力渡过湘江，粉碎了蒋介石围歼红军于湘江以东的企图。但战后清点，中央红军由出发时的8.6万余人锐减至3万余人——这是长征以来最惨重的一次损失。'
+        },
+        {
+          text: '放弃掩护，让部队尽快独自渡江',
+          correct: false,
+          cost: { soldiers: -20000, food: -10 },
+          popupTitle: '史实科普 · 为什么不能放弃掩护',
+          popupText: '中央纵队携带大量机关和辎重，行动十分迟缓。若前线部队放弃掩护独自渡江，中央机关将直接暴露于敌，整个红军指挥中枢面临毁灭。湘江战役中，红军正是以前赴后继的牺牲换取中央主力渡江——许多部队整建制打光，仍死死顶住敌人。'
+        },
+        {
+          text: '原地休整，等待时机再渡江',
+          correct: false,
+          cost: { soldiers: -15000 },
+          popupTitle: '史实科普 · 为什么不能原地等待',
+          popupText: '敌军从三路向湘江压来，中央军、湘军、桂军正在合围。原地停留只会让红军陷入重围、被分割包围。湘江战役红军苦战五昼夜，抢在敌人合围完成前强渡，才粉碎了蒋介石围歼红军于湘江以东的企图。'
+        }
+      ],
+      next: 3
+    });
+  </script>
+</body>
+</html>
+ 
