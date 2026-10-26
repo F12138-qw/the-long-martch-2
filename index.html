@@ -1,1 +1,123 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>铁血征程 · 重走长征路</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<!-- ============ 顶部栏 ============ -->
+<header class="topbar">
+<div class="site-title">铁血征程 · <span class="gold">重走长征路</span></div>
+<div class="res-bar">
+<span class="res-item">兵员 <span class="num res-soldiers">86,000</span> 人
+</span>
+<span class="res-item">粮食 <span class="num res-food">100%</span></span>
+<span class="res-item">弹药 <span class="num res-ammo">100%</span></span>
+<button class="btn-back" id="btnReset" type="button">重新开始</button>
+</div>
+</header>
+<!-- ============ 封面区 ============ -->
+<section class="hero">
+<h1>铁血征程</h1>
+<div class="subtitle">纪念红军长征胜利 90 周年 · 交互式数字展馆</div>
+<p class="intro">
+1934 年 10 月至 1936 年 10 月，中国工农红军以非凡的意志走完万里征途。
+现在，你将作为一名年轻的红军指挥员，在每一个历史节点做出抉择——
+选错了不会出局，而是会看到当年红军真实面对的困境与战略考量。
+点击地图节点，开启你的长征。
+</p>
+<div class="overview-card">
+<div class="ov-item"><div class="label">长征路程</div><div class="value">二万五千
+里</div></div>
+<div class="ov-item"><div class="label">历史节点</div><div class="value">7 站
+</div></div>
+<div class="ov-item"><div class="label">当前进度</div><div class="value"
+id="progressText">0 / 7</div></div>
+</div>
+</section>
+<!-- ============ SVG 长征行军地图（核心动态画面） ============ -->
+<section class="map-wrap">
+<div class="map-frame">
+<h2>长征行军地图</h2>
+<p class="map-hint">路线正在绘制中……点击地图上的金色节点，进入对应历史抉择</p>
+<svg class="map-svg" viewBox="0 0 1100 560" xmlns="http://www.w3.org/2000/svg"
+role="img" aria-label="红军长征路线示意图">
+<!-- 背景底纹 -->
+<rect x="0" y="0" width="1100" height="560" fill="#fbf6ea"/>
+<rect x="0" y="0" width="1100" height="560" fill="url(#bgPattern)"
+opacity="0.5"/>
+<defs>
+<pattern id="bgPattern" width="46" height="46" patternUnits="userSpaceOnUse">
+<circle cx="4" cy="4" r="1.4" fill="#e8dcc0"/>
+</pattern>
+</defs>
+<!-- 行军路线：由 js/main.js 添加 .drawing 类触发逐段绘制动画 -->
+<path id="routePath"
+class="route-line"
+d="M 930,470 L 860,452 Q 820,444 782,445
+L 700,432 Q 650,428 600,425
+L 500,395 Q 452,362 420,330
+L 385,282 Q 352,252 330,225
+L 360,185 Q 420,150 490,140
+L 640,105 Q 722,86 790,80"
+stroke="#c8a048" stroke-width="3" fill="none"
+stroke-dasharray="6 6"/>
+<!-- 小红军行军标记（沿路线移动） -->
+<g id="marchMarker" class="march-marker" opacity="0"
+transform="translate(930,470)">
+<circle r="8" fill="#991010" stroke="#fff" stroke-width="2"/>
+<text y="22" text-anchor="middle" fill="#6e0b0b">红军足迹</text>
+</g>
+<!-- 会师终点旗帜 -->
+<g class="end-flag">
+<line x1="790" y1="80" x2="790" y2="38" stroke="#6e0b0b" stroke-width="3"/>
+<polygon points="790,38 826,46 790,56" fill="#991010"/>
+<text x="798" y="30" font-size="13" fill="#6e0b0b" font-weight="bold">会师
+</text>
+</g>
+<!-- ========== 节点 1 瑞金 ========== -->
+<g class="node-group" data-chapter="1">
+<circle class="node-dot pulse" cx="930" cy="470" r="9" fill="#c8a048"
+stroke="#fff" stroke-width="2"/>
+<text class="node-star" x="930" y="430" text-anchor="middle">★</text>
+<text class="node-label" x="918" y="492" text-anchor="end">瑞金</text>
+<text class="node-date" x="918" y="507" text-anchor="end">1934.10 出发</text>
+</g>
+<!-- ========== 节点 2 湘江 ========== -->
+<g class="node-group" data-chapter="2">
+<circle class="node-dot pulse" cx="782" cy="445" r="9" fill="#c8a048"
+stroke="#fff" stroke-width="2"/>
+<text class="node-star" x="782" y="405" text-anchor="middle">★</text>
+<text class="node-label" x="796" y="430" text-anchor="start">湘江战役</text>
+<text class="node-date" x="796" y="446" text-anchor="start">1934.12</text>
+</g>
+<!-- ========== 节点 3 遵义 ========== -->
+<g class="node-group" data-chapter="3">
+<circle class="node-dot pulse" cx="600" cy="425" r="9" fill="#c8a048"
+stroke="#fff" stroke-width="2"/>
+<text class="node-star" x="600" y="385" text-anchor="middle">★</text>
+<text class="node-label" x="586" y="446" text-anchor="end">遵义会议</text>
+<text class="node-date" x="586" y="462" text-anchor="end">1935.01</text>
+</g>
+<!-- ========== 节点 4 泸定桥 ========== -->
+<g class="node-group" data-chapter="4">
+<circle class="node-dot pulse" cx="420" cy="330" r="9" fill="#c8a048"
+stroke="#fff" stroke-width="2"/>
+<text class="node-star" x="420" y="290" text-anchor="middle">★</text>
+<text class="node-label" x="404" y="352" text-anchor="end">飞夺泸定桥</text>
+<text class="node-date" x="404" y="368" text-anchor="end">1935.05</text>
+</g>
+<!-- ========== 节点 5 夹金山 ========== -->
+<g class="node-group" data-chapter="5">
+<circle class="node-dot pulse" cx="330" cy="225" r="9" fill="#c8a048"
+stroke="#fff" stroke-width="2"/>
+<text class="node-star" x="330" y="185" text-anchor="middle">★</text>
+<text class="node-label" x="346" y="222" text-anchor="start">翻越夹金山</text>
+<text class="node-date" x="346" y="238" text-anchor="start">1935.06</text>
+</g>
+<!-- ========== 节点 6 松潘草地 ========== -->
+<g class="node-group" data-chapter="6">
+<circle class="node-dot pulse" cx="490" cy="140" r="9" fill="#c8a048"
+stroke="#fff" stroke-width="2"/>
