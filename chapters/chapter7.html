@@ -1,1 +1,107 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第七章 · 会宁会师</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+ 
+  <header class="topbar">
+    <div class="site-title">铁血征程 · <span class="gold">重走长征路</span></div>
+    <div class="res-bar">
+      <span class="res-item">兵员 <span class="num res-soldiers">-</span> 人</span>
+      <span class="res-item">粮食 <span class="num res-food">-</span></span>
+      <span class="res-item">弹药 <span class="num res-ammo">-</span></span>
+      <button class="btn-back" onclick="goHome()" type="button">返回地图</button>
+    </div>
+  </header>
+ 
+  <main class="chapter-main">
+    <div class="chapter-card">
+      <div class="chapter-head">
+        <div class="ch-title" id="chTitle"></div>
+        <div class="ch-date" id="chDate"></div>
+      </div>
+      <div class="story-box" id="storyBox"></div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="next-area" id="nextArea"></div>
+    </div>
+ 
+    <!-- ============ 会师总结区（通关后显示） ============ -->
+    <div class="chapter-card" id="finishArea" style="display:none; margin-top:30px;">
+      <div class="finish-box">
+        <div class="big-star">★</div>
+        <h2 style="color:#991010; letter-spacing:4px; margin-top:10px;">会 师 · 长 征 胜 利</h2>
+        <p style="margin-top:16px; text-align:left; font-size:1.02rem;">
+          1936年10月，红一、红二、红四方面军在以会宁县城为中心的地域胜利会师，
+          历时两年的长征胜利结束。这是中国革命史上的一座丰碑——
+          从1934年10月到1936年10月，红军转战十四省，跨越万水千山，
+          用双脚走出了二万五千里，也走出了中国革命的新天地。
+        </p>
+      </div>
+ 
+      <h3 style="color:#c8a048; margin-top:24px; border-bottom:1px solid #e2d5b8; padding-bottom:6px;">
+        你的行军复盘
+      </h3>
+      <table class="review-table" id="reviewTable"></table>
+      <p style="font-size:.92rem; color:#8a6f4d; text-align:center;">
+        * 真实历史数据：中央红军（红一方面军主力）到达陕北时约7000余人
+      </p>
+ 
+      <h3 style="color:#991010; margin-top:26px; border-bottom:1px solid #e2d5b8; padding-bottom:6px;">
+        伟大长征精神
+      </h3>
+      <p style="margin-top:12px; font-size:1rem; text-align:left;">
+        伟大长征精神，就是把全国人民和中华民族的根本利益看得高于一切，坚定革命的理想和信念，
+        坚信正义事业必然胜利的精神；就是为了救国救民，不怕任何艰难险阻，不惜付出一切牺牲的精神；
+        就是坚持独立自主、实事求是，一切从实际出发的精神；就是顾全大局、严守纪律、紧密团结的精神；
+        就是紧紧依靠人民群众，同人民群众生死相依、患难与共、艰苦奋斗的精神。
+      </p>
+ 
+      <h3 style="color:#991010; margin-top:26px; border-bottom:1px solid #e2d5b8; padding-bottom:6px;">
+        走好我们这一代人的长征路
+      </h3>
+      <p style="margin-top:12px; font-size:1rem; text-align:left;">
+        每一代人有每一代人的长征路。作为新时代青年，我们应当铭记这段历史，
+        传承和弘扬伟大长征精神，坚定理想信念，不怕困难、勇往直前，
+        在学习与生活中走好自己的长征路，为实现中华民族伟大复兴贡献力量。
+      </p>
+ 
+      <div style="text-align:center; margin-top:28px;">
+        <button class="btn-primary" onclick="goHome()" type="button">返回长征地图</button>
+      </div>
+    </div>
+  </main>
+ 
+  <footer class="footer">《中国近现代史纲要》课程实践作品 · 纪念红军长征胜利90周年</footer>
+ 
+  <script src="../js/game.js"></script>
+  <script>
+    initGame({
+      chapter: 7,
+      title: '会宁会师',
+      date: '1936年10月',
+      story: '历经千难万险，你的队伍终于走到了这一天。1936年10月，红一、红二、红四方面军在甘肃会宁等地胜利会师，历时两年的长征胜利结束。回望来路，每一寸土地都浸透着战友的鲜血；眺望前方，一个新的时代正在开启——',
+      options: [],
+      next: null,
+      onFinish: function () {
+        var area = document.getElementById('finishArea');
+        area.style.display = 'block';
+        /* 生成复盘对比表 */
+        var r = getRes();
+        var tbody = '<tr><th>项目</th><th>你的行军</th><th>真实历史</th></tr>' +
+          '<tr><td>出发兵员</td><td>86,000 人</td><td>约 8.6 万余人</td></tr>' +
+          '<tr><td>抵达时兵员</td><td class="hl">' + fmtNum(r.soldiers) + ' 人</td><td class="hl">约 7,000 余人</td></tr>' +
+          '<tr><td>粮食余量</td><td>' + r.food + '%</td><td>几近断绝</td></tr>' +
+          '<tr><td>弹药余量</td><td>' + r.ammo + '%</td><td>极度匮乏</td></tr>';
+        document.getElementById('reviewTable').innerHTML = tbody;
+        area.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  </script>
+</body>
+</html>
+ 
