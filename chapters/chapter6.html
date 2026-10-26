@@ -1,1 +1,70 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第六章 · 过松潘草地</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+ 
+  <header class="topbar">
+    <div class="site-title">铁血征程 · <span class="gold">重走长征路</span></div>
+    <div class="res-bar">
+      <span class="res-item">兵员 <span class="num res-soldiers">-</span> 人</span>
+      <span class="res-item">粮食 <span class="num res-food">-</span></span>
+      <span class="res-item">弹药 <span class="num res-ammo">-</span></span>
+      <button class="btn-back" onclick="goHome()" type="button">返回地图</button>
+    </div>
+  </header>
+ 
+  <main class="chapter-main">
+    <div class="chapter-card">
+      <div class="chapter-head">
+        <div class="ch-title" id="chTitle"></div>
+        <div class="ch-date" id="chDate"></div>
+      </div>
+      <div class="story-box" id="storyBox"></div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="next-area" id="nextArea"></div>
+    </div>
+  </main>
+ 
+  <footer class="footer">《中国近现代史纲要》课程实践作品 · 纪念红军长征胜利90周年</footer>
+ 
+  <script src="../js/game.js"></script>
+  <script>
+    initGame({
+      chapter: 6,
+      title: '过松潘草地',
+      date: '1935年8月',
+      story: '1935年8月，红军进入松潘草地。这片高原沼泽气候无常、沼泽遍布，几乎无法补充粮食。出发前筹到的粮食，每人少的只有三四斤、多的不过十斤，却要支撑大约七天才能走出草地。面对茫茫草地——',
+      options: [
+        {
+          text: '节约粮食，互相扶持，认准方向前进',
+          correct: true,
+          cost: { food: -15, soldiers: -4000 },
+          afterText: '红军靠着野菜、草根、树皮充饥，以惊人的意志走出草地。无数战士在饥饿与沼泽中倒下，用生命铺就了前进的道路。1935年8月，红军走出松潘草地，继续北上。'
+        },
+        {
+          text: '把剩余粮食一次性分吃完',
+          correct: false,
+          cost: { food: -30, soldiers: -8000 },
+          popupTitle: '史实科普 · 为什么必须节约粮食',
+          popupText: '草地中没有补给来源，粮食一旦耗尽，后续将有大量战士饿死。红军过草地时严格节省粮食，一粒青稞都数着吃，仍有许多战士因饥饿牺牲在草地上。透支粮食，等于透支全军的生命。'
+        },
+        {
+          text: '分散队伍，各自寻找出路',
+          correct: false,
+          cost: { soldiers: -10000 },
+          popupTitle: '史实科普 · 为什么不能分散',
+          popupText: '草地环境凶险，分散队伍极易迷失方向、陷入沼泽，更会被敌人各个击破。红军保持统一组织、前后照应，靠集体的力量才走出这片死亡地带。'
+        }
+      ],
+      next: 7
+    });
+  </script>
+</body>
+</html>
+ 
