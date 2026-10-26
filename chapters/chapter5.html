@@ -1,1 +1,70 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第五章 · 翻越夹金山</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+ 
+  <header class="topbar">
+    <div class="site-title">铁血征程 · <span class="gold">重走长征路</span></div>
+    <div class="res-bar">
+      <span class="res-item">兵员 <span class="num res-soldiers">-</span> 人</span>
+      <span class="res-item">粮食 <span class="num res-food">-</span></span>
+      <span class="res-item">弹药 <span class="num res-ammo">-</span></span>
+      <button class="btn-back" onclick="goHome()" type="button">返回地图</button>
+    </div>
+  </header>
+ 
+  <main class="chapter-main">
+    <div class="chapter-card">
+      <div class="chapter-head">
+        <div class="ch-title" id="chTitle"></div>
+        <div class="ch-date" id="chDate"></div>
+      </div>
+      <div class="story-box" id="storyBox"></div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="next-area" id="nextArea"></div>
+    </div>
+  </main>
+ 
+  <footer class="footer">《中国近现代史纲要》课程实践作品 · 纪念红军长征胜利90周年</footer>
+ 
+  <script src="../js/game.js"></script>
+  <script>
+    initGame({
+      chapter: 5,
+      title: '翻越夹金山',
+      date: '1935年6月',
+      story: '1935年6月，中央红军到达夹金山下。这座“神山”主峰海拔4000多米，终年积雪、空气稀薄、天气瞬息万变。战士们缺衣少粮，却必须翻过它，才能与红四方面军会师。面对这座大雪山——',
+      options: [
+        {
+          text: '相互搀扶，缓步翻越雪山',
+          correct: true,
+          cost: { soldiers: -3000 },
+          afterText: '1935年6月12日至18日，中央红军分批翻越夹金山——这是中央红军长征中翻越的第一座大雪山。翻过雪山后，红军与红四方面军在懋功（今小金县）达维地区胜利会师。'
+        },
+        {
+          text: '快速奔跑冲上山顶',
+          correct: false,
+          cost: { soldiers: -8000 },
+          popupTitle: '史实科普 · 为什么不能急速奔跑',
+          popupText: '海拔4000多米的高山严重缺氧，剧烈奔跑极易引发高原反应，许多战士因此倒下。红军翻雪山只能缓步前进、互相帮扶，用木棍探路，靠意志与严寒、缺氧抗争，才征服了这座“死亡之山”。'
+        },
+        {
+          text: '就地驻扎，等天气转暖再翻越',
+          correct: false,
+          cost: { soldiers: -6000, food: -20 },
+          popupTitle: '史实科普 · 为什么不能等待',
+          popupText: '雪山终年积雪，不存在“等到回暖”的可能；且敌军追兵在后，红军无法在雪山脚下长期停留。等待，只会等来敌人的合围。翻越夹金山，是当时唯一的出路。'
+        }
+      ],
+      next: 6
+    });
+  </script>
+</body>
+</html>
+ 
