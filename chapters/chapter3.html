@@ -1,1 +1,70 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第三章 · 遵义会议</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+ 
+  <header class="topbar">
+    <div class="site-title">铁血征程 · <span class="gold">重走长征路</span></div>
+    <div class="res-bar">
+      <span class="res-item">兵员 <span class="num res-soldiers">-</span> 人</span>
+      <span class="res-item">粮食 <span class="num res-food">-</span></span>
+      <span class="res-item">弹药 <span class="num res-ammo">-</span></span>
+      <button class="btn-back" onclick="goHome()" type="button">返回地图</button>
+    </div>
+  </header>
+ 
+  <main class="chapter-main">
+    <div class="chapter-card">
+      <div class="chapter-head">
+        <div class="ch-title" id="chTitle"></div>
+        <div class="ch-date" id="chDate"></div>
+      </div>
+      <div class="story-box" id="storyBox"></div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="next-area" id="nextArea"></div>
+    </div>
+  </main>
+ 
+  <footer class="footer">《中国近现代史纲要》课程实践作品 · 纪念红军长征胜利90周年</footer>
+ 
+  <script src="../js/game.js"></script>
+  <script>
+    initGame({
+      chapter: 3,
+      title: '遵义会议',
+      date: '1935年1月15日—17日',
+      story: '湘江之战后，中央红军从出发时的8.6万余人锐减至3万余人，全军上下对错误军事指挥的不满日益强烈。1935年1月，部队进驻遵义，中共中央在这里召开政治局扩大会议。会议上的声音，将决定红军何去何从——',
+      options: [
+        {
+          text: '支持纠正错误军事指挥，调整领导',
+          correct: true,
+          cost: { soldiers: 0 },
+          afterText: '遵义会议批评和纠正了“左”倾教条主义在军事上的错误，增补毛泽东为中央政治局常委，事实上确立了毛泽东在党和红军中的领导地位。这是中国共产党历史上一个生死攸关的转折点。'
+        },
+        {
+          text: '继续坚持此前的作战方式',
+          correct: false,
+          cost: { soldiers: -5000 },
+          popupTitle: '史实科普 · 为什么必须纠正军事路线',
+          popupText: '此前博古、李德的“左”倾军事指挥，坚持阵地战、“堡垒对堡垒”的硬拼战法，是第五次反“围剿”失利和长征初期惨重损失的重要原因。湘江的鲜血让全军认识到：不纠正错误军事路线，红军就没有出路。'
+        },
+        {
+          text: '放弃明确目标，一味向西退却',
+          correct: false,
+          cost: { soldiers: -5000, food: -10 },
+          popupTitle: '史实科普 · 为什么不能盲目退却',
+          popupText: '盲目退却无法摆脱数十万敌军的围追堵截。红军必须有明确的战略方向，寻找新的落脚点。遵义会议正是要解决这个根本问题——此后红军在毛泽东等人指挥下机动灵活转战，才逐渐摆脱被动局面。'
+        }
+      ],
+      next: 4
+    });
+  </script>
+</body>
+</html>
+ 
