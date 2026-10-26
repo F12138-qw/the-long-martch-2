@@ -1,1 +1,381 @@
-
+/* ============================================================
+   《重走长征》· 全局样式与动画   css/style.css
+   所有页面共用此文件：红色思政主题 + 全套原生CSS动画
+   存放路径：css/style.css
+   修改指引：改颜色、字号、动画快慢，只改这个文件
+   ============================================================ */
+ 
+/* ---------- 主题变量（改主题色只改这里） ---------- */
+:root {
+  --main: #991010;          /* 主色：暗红 */
+  --main-dark: #6e0b0b;     /* 深红 */
+  --gold: #c8a048;          /* 金色 */
+  --bg: #f7f2e8;            /* 米白纸感背景 */
+  --paper: #fdf8ee;         /* 卡片纸色 */
+  --ink: #3a2a1e;           /* 深棕墨色文字 */
+  --good: #2e7d32;          /* 正确反馈绿 */
+  --bad: #c62828;           /* 错误反馈红 */
+}
+ 
+/* ---------- 基础重置 ---------- */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+ 
+body {
+  font-family: "Noto Serif SC", "Songti SC", "SimSun", serif;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.7;
+}
+ 
+/* ---------- 顶部栏（所有页面共用） ---------- */
+.topbar {
+  background: var(--main);
+  color: #fff;
+  padding: 12px 24px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+}
+.topbar .site-title { font-size: 1.25rem; letter-spacing: 2px; font-weight: bold; }
+.topbar .site-title .gold { color: var(--gold); }
+ 
+/* 资源条：兵员 / 粮食 / 弹药 */
+.res-bar { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+.res-item {
+  background: rgba(255,255,255,.12);
+  border-radius: 20px;
+  padding: 4px 14px;
+  font-size: .9rem;
+  display: flex; align-items: center; gap: 6px;
+}
+.res-item .num { font-weight: bold; color: #ffe9a8; }
+.res-item.low .num { color: #ffb3b3; animation: warnBlink 1s infinite; }
+ 
+@keyframes warnBlink {
+  0%,100% { opacity: 1; }
+  50% { opacity: .45; }
+}
+ 
+/* 返回按钮 */
+.btn-back {
+  background: var(--gold);
+  color: #3a2a1e;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: .9rem;
+  font-weight: bold;
+  transition: transform .2s ease, background .2s ease;
+}
+.btn-back:hover { transform: translateY(-2px); background: #d9b45a; }
+ 
+/* ---------- 首页：封面标题区 ---------- */
+.hero {
+  text-align: center;
+  padding: 44px 20px 10px;
+}
+.hero h1 { font-size: 2.2rem; color: var(--main); letter-spacing: 6px; }
+.hero .subtitle { color: var(--gold); font-size: 1.05rem; margin-top: 6px; letter-spacing: 3px; }
+.hero .intro { max-width: 760px; margin: 18px auto 0; font-size: 1rem; color: #5c4a38; }
+ 
+/* 资源总览卡（首页也显示） */
+.overview-card {
+  max-width: 760px;
+  margin: 16px auto 0;
+  background: var(--paper);
+  border: 1px solid #e2d5b8;
+  border-radius: 12px;
+  padding: 14px 20px;
+  display: flex;
+  justify-content: center;
+  gap: 26px;
+  flex-wrap: wrap;
+  box-shadow: 0 2px 6px rgba(0,0,0,.06);
+}
+.overview-card .ov-item { text-align: center; }
+.overview-card .ov-item .label { font-size: .85rem; color: #8a6f4d; }
+.overview-card .ov-item .value { font-size: 1.2rem; font-weight: bold; color: var(--main); }
+ 
+/* ---------- 首页：SVG 长征行军地图（核心动态效果） ---------- */
+.map-wrap {
+  max-width: 1120px;
+  margin: 26px auto;
+  padding: 0 18px;
+}
+.map-frame {
+  background: var(--paper);
+  border: 1px solid #e2d5b8;
+  border-radius: 14px;
+  padding: 18px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.08);
+}
+.map-frame h2 { text-align: center; color: var(--main); letter-spacing: 4px; margin-bottom: 8px; }
+.map-hint { text-align: center; color: #8a6f4d; font-size: .9rem; margin-bottom: 6px; }
+.map-svg { width: 100%; height: auto; display: block; }
+ 
+/* 行军路线：逐段绘制动画（关键帧+JS配合） */
+.route-line {
+  fill: none;
+  stroke: var(--gold);
+  stroke-width: 3;
+  stroke-dasharray: 6 6;   /* 虚线效果，由JS动态改为实线绘制 */
+  stroke-dashoffset: 0;
+}
+.route-line.drawing {
+  stroke: var(--main);
+  stroke-width: 3;
+  stroke-dasharray: 2000;
+  stroke-dashoffset: 2000;
+  animation: drawRoute 5s ease forwards;
+}
+@keyframes drawRoute { to { stroke-dashoffset: 0; } }
+ 
+/* 节点圆点：呼吸脉动动画 */
+.node-group { cursor: pointer; }
+.node-dot {
+  transition: r .25s ease;
+}
+.node-group:hover .node-dot { r: 13; }
+.node-dot.pulse { animation: nodePulse 2s ease-in-out infinite; }
+@keyframes nodePulse {
+  0%,100% { r: 9; opacity: 1; }
+  50% { r: 13; opacity: .75; }
+}
+.node-label {
+  fill: var(--ink);
+  font-size: 15px;
+  font-weight: bold;
+  paint-order: stroke;
+  stroke: #fff;
+  stroke-width: 4px;
+}
+.node-date { fill: #8a6f4d; font-size: 12px; paint-order: stroke; stroke: #fff; stroke-width: 3px; }
+.node-group.done .node-dot { fill: var(--main); }
+.node-group.done .node-label { fill: var(--main); }
+/* 完成节点上方的小红星 */
+.node-star { font-size: 18px; fill: var(--gold); opacity: 0; transition: opacity .4s ease; }
+.node-group.done .node-star { opacity: 1; }
+ 
+/* 地图上的小红军标记（沿路线移动，由JS控制） */
+.march-marker { transition: transform 1.2s ease; }
+.march-marker circle { fill: var(--main); }
+.march-marker text { fill: var(--main-dark); font-size: 13px; font-weight: bold; }
+ 
+/* 会师终点旗帜 */
+.end-flag { animation: flagWave 1.6s ease-in-out infinite; transform-origin: 50% 100%; }
+@keyframes flagWave {
+  0%,100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+ 
+/* 地图图例 */
+.legend { display: flex; justify-content: center; gap: 22px; margin-top: 10px; flex-wrap: wrap; font-size: .85rem; color: #5c4a38; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.legend .lg-dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.legend .lg-line { width: 26px; height: 3px; background: var(--main); display: inline-block; }
+ 
+/* ---------- 章节页面 ---------- */
+.chapter-main { max-width: 860px; margin: 30px auto; padding: 0 20px 60px; }
+.chapter-card {
+  background: var(--paper);
+  border: 1px solid #e2d5b8;
+  border-radius: 14px;
+  padding: 30px 34px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.08);
+}
+.chapter-head { text-align: center; margin-bottom: 22px; }
+.chapter-head .ch-title { font-size: 1.7rem; color: var(--main); letter-spacing: 3px; }
+.chapter-head .ch-date {
+  display: inline-block;
+  margin-top: 8px;
+  background: var(--main);
+  color: #fff;
+  border-radius: 20px;
+  padding: 3px 16px;
+  font-size: .9rem;
+  letter-spacing: 1px;
+}
+ 
+/* 剧情文本框（打字机效果容器） */
+.story-box {
+  background: #f5ecd9;
+  border-left: 5px solid var(--gold);
+  padding: 18px 22px;
+  border-radius: 8px;
+  min-height: 120px;
+  font-size: 1.05rem;
+  color: #3a2a1e;
+  white-space: pre-wrap;
+}
+.story-box .cursor { display: inline-block; width: 2px; height: 1.05em; background: var(--main); vertical-align: -2px; animation: blink 1s step-end infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+ 
+/* 选项按钮 */
+.options { margin-top: 26px; display: flex; flex-direction: column; gap: 14px; }
+.option-btn {
+  background: #fff;
+  border: 2px solid #d8c9a8;
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 1rem;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+  display: flex; align-items: flex-start; gap: 12px;
+}
+.option-btn .opt-key {
+  flex: none;
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  background: var(--main);
+  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: bold;
+}
+.option-btn:hover { transform: translateX(6px); border-color: var(--main); background: #fdf6e8; }
+.option-btn:disabled { cursor: default; opacity: .75; transform: none; }
+.option-btn.chosen-good { border-color: var(--good); background: #e8f5e9; }
+.option-btn.chosen-bad { border-color: var(--bad); background: #fdecea; }
+ 
+/* 反馈条（选对/选错提示） */
+.feedback {
+  margin-top: 20px;
+  border-radius: 10px;
+  padding: 14px 20px;
+  font-size: 1rem;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity .4s ease, transform .4s ease;
+}
+.feedback.show { opacity: 1; transform: translateY(0); }
+.feedback.good { background: #e8f5e9; border: 1px solid var(--good); color: var(--good); }
+.feedback.bad { background: #fdecea; border: 1px solid var(--bad); color: var(--bad); }
+ 
+/* 下一步操作区 */
+.next-area { margin-top: 22px; display: flex; gap: 14px; flex-wrap: wrap; }
+.btn-primary {
+  background: var(--main);
+  color: #fff;
+  border: none;
+  padding: 12px 26px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
+}
+.btn-primary:hover { transform: translateY(-2px); background: var(--main-dark); }
+.btn-ghost {
+  background: transparent;
+  color: var(--main);
+  border: 2px solid var(--main);
+  padding: 10px 22px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: transform .2s ease, background .2s ease;
+}
+.btn-ghost:hover { transform: translateY(-2px); background: rgba(153,16,16,.06); }
+ 
+/* ---------- 科普弹窗（淡入弹出动画） ---------- */
+.popup-mask {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,.55);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  z-index: 999;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+.popup-mask.show { opacity: 1; }
+.popup {
+  background: var(--paper);
+  border-radius: 14px;
+  max-width: 640px;
+  width: 100%;
+  padding: 26px 30px;
+  border-top: 6px solid var(--main);
+  box-shadow: 0 10px 30px rgba(0,0,0,.3);
+  transform: translateY(-24px) scale(.97);
+  opacity: 0;
+  transition: transform .35s ease, opacity .35s ease;
+}
+.popup-mask.show .popup { transform: translateY(0) scale(1); opacity: 1; }
+.popup .popup-title {
+  color: var(--main);
+  font-size: 1.25rem;
+  letter-spacing: 2px;
+  border-bottom: 1px solid #e2d5b8;
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+.popup .popup-text { font-size: 1rem; color: #3a2a1e; }
+.popup .popup-cost {
+  margin-top: 14px;
+  background: #f5ecd9;
+  border-radius: 8px;
+  padding: 10px 16px;
+  font-size: .95rem;
+  color: var(--main-dark);
+}
+.popup .popup-close {
+  margin-top: 18px;
+  background: var(--gold);
+  color: #3a2a1e;
+  border: none;
+  padding: 10px 26px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-family: inherit;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform .2s ease;
+}
+.popup .popup-close:hover { transform: translateY(-2px); }
+ 
+/* ---------- 会师总结页特殊样式 ---------- */
+.finish-box { text-align: center; padding: 10px 0 20px; }
+.finish-box .big-star { font-size: 3rem; color: var(--gold); animation: starSpin 3s ease infinite; }
+@keyframes starSpin { 0%,100% { transform: scale(1) rotate(0deg); } 50% { transform: scale(1.2) rotate(12deg); } }
+.review-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 1rem;
+}
+.review-table th, .review-table td { border: 1px solid #d8c9a8; padding: 10px 14px; text-align: center; }
+.review-table th { background: var(--main); color: #fff; }
+.review-table td { background: #fff; }
+.review-table .hl { color: var(--main); font-weight: bold; }
+ 
+/* ---------- 页面切换淡入（body入场动画） ---------- */
+.page-enter { animation: pageFade .5s ease; }
+@keyframes pageFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+ 
+/* ---------- 页脚 ---------- */
+.footer {
+  text-align: center;
+  padding: 26px 20px;
+  color: #8a6f4d;
+  font-size: .85rem;
+  border-top: 1px solid #e2d5b8;
+  margin-top: 30px;
+}
+ 
+/* ---------- 响应式：手机 ---------- */
+@media (max-width: 720px) {
+  .hero h1 { font-size: 1.6rem; letter-spacing: 3px; }
+  .chapter-card { padding: 22px 18px; }
+  .chapter-head .ch-title { font-size: 1.35rem; }
+  .topbar { padding: 10px 14px; }
+  .res-bar { gap: 8px; }
+  .option-btn { padding: 12px 14px; }
+}
+ 
