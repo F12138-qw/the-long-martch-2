@@ -1,1 +1,70 @@
-
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>第四章 · 飞夺泸定桥</title>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+ 
+  <header class="topbar">
+    <div class="site-title">铁血征程 · <span class="gold">重走长征路</span></div>
+    <div class="res-bar">
+      <span class="res-item">兵员 <span class="num res-soldiers">-</span> 人</span>
+      <span class="res-item">粮食 <span class="num res-food">-</span></span>
+      <span class="res-item">弹药 <span class="num res-ammo">-</span></span>
+      <button class="btn-back" onclick="goHome()" type="button">返回地图</button>
+    </div>
+  </header>
+ 
+  <main class="chapter-main">
+    <div class="chapter-card">
+      <div class="chapter-head">
+        <div class="ch-title" id="chTitle"></div>
+        <div class="ch-date" id="chDate"></div>
+      </div>
+      <div class="story-box" id="storyBox"></div>
+      <div class="options" id="options"></div>
+      <div class="feedback" id="feedback"></div>
+      <div class="next-area" id="nextArea"></div>
+    </div>
+  </main>
+ 
+  <footer class="footer">《中国近现代史纲要》课程实践作品 · 纪念红军长征胜利90周年</footer>
+ 
+  <script src="../js/game.js"></script>
+  <script>
+    initGame({
+      chapter: 4,
+      title: '飞夺泸定桥',
+      date: '1935年5月',
+      story: '1935年5月，红军巧渡金沙江后，大渡河横在面前。蒋介石扬言要让红军成为“石达开第二”，企图围歼红军于大渡河畔。要过大渡河，必须夺取泸定桥——而此刻，距离泸定桥还有240里山路，时间只剩一昼夜——',
+      options: [
+        {
+          text: '昼夜兼程，奔袭夺取泸定桥',
+          correct: true,
+          cost: { soldiers: 0 },
+          afterText: '红四团一昼夜急行军240里，抢在敌人增援之前抵达泸定桥。22名突击队员攀踏铁索，冒着密集火力强夺泸定桥，为大部队渡河打开了生路。红军随后迅速渡过大渡河，粉碎了蒋介石的围歼图谋。'
+        },
+        {
+          text: '原地休整，等体力恢复再走',
+          correct: false,
+          cost: { soldiers: -6000, ammo: -10 },
+          popupTitle: '史实科普 · 为什么不能休整拖延',
+          popupText: '敌军增援部队正昼夜兼程赶来，时间就是生命。红四团正是以“走完二百四，赶到泸定桥”的信念，一昼夜240里急行军，先敌一步抵达。一旦拖延，渡口被封锁、追兵合围，红军将重蹈石达开的覆辙。'
+        },
+        {
+          text: '放弃泸定桥，绕道翻越大山',
+          correct: false,
+          cost: { soldiers: -8000, food: -15 },
+          popupTitle: '史实科普 · 为什么必须夺取泸定桥',
+          popupText: '大渡河两岸悬崖陡壁，除泸定桥外没有更可行的大规模通路；绕行将进入敌军重兵布防区域，且地形更险、补给更难。夺取泸定桥，是当时打通北上通道唯一现实的选择。'
+        }
+      ],
+      next: 5
+    });
+  </script>
+</body>
+</html>
+ 
